@@ -1,0 +1,2059 @@
+{
+  "info": {
+    "_postman_id": "cbb-analytics-api-collection",
+    "name": "CBB Analytics API",
+    "description": "Postman collection for the CBB Analytics REST API. Targets **v3** — the recommended version.\n\nv3 responses are wrapped in an envelope: `{ response: { meta, data } }`. Paging metadata (including `meta.nextCursor` for cursor pagination) lives in `meta`.\n\nPagination: every endpoint accepts `limit` plus either `offset` (simple) or `after` (faster on deep pages) — use one, not both. For cursor walks, copy the previous response's `meta.nextCursor` (or the `X-Next-Cursor` header) into `after` and keep paging until the cursor is absent.\n\nSorting: v3 always sorts by `_id` ascending. `sortBy`/`sortOrder` are v1/v2-only and return 400 on v3, so they are not included in this collection.\n\nSet the `apiKey` collection variable before sending any request. v1 and v2 remain available on the server (hand-edit the URL prefix if you need them) — see /api-docs for the canonical multi-version reference.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": {
+      "major": 2,
+      "minor": 0,
+      "patch": 0
+    }
+  },
+  "item": [
+    {
+      "name": "Stats - Team Period Box",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/period-box",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "period-box"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "exhibition",
+              "value": "exhibitionOnly",
+              "description": "Determine whether to include exhibition games in the results. Available values: all, exhibitionOnly, nonExhibitionOnly. Default: nonExhibitionOnly.",
+              "disabled": true
+            },
+            {
+              "key": "inDivision",
+              "value": true,
+              "description": "If true, return for games against D-I teams only. If false, return for non D-I opponents. If all, return all games. Available values: all, true, false. Default: true.",
+              "disabled": true
+            },
+            {
+              "key": "location",
+              "value": "",
+              "description": "If set, return only game stats whether the team is in the specified location. Available values: all, neutral, home, away. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Team Game Box",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/game-box",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "game-box"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "exhibition",
+              "value": "exhibitionOnly",
+              "description": "Determine whether to include exhibition games in the results. Available values: all, exhibitionOnly, nonExhibitionOnly. Default: nonExhibitionOnly.",
+              "disabled": true
+            },
+            {
+              "key": "inDivision",
+              "value": true,
+              "description": "If true, return for games against D-I teams only. If false, return for non D-I opponents. If all, return all games. Available values: all, true, false. Default: true.",
+              "disabled": true
+            },
+            {
+              "key": "location",
+              "value": "",
+              "description": "If set, return only game stats whether the team is in the specified location. Available values: all, neutral, home, away. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Team Game PBP",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/game-pbp",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "game-pbp"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "exhibition",
+              "value": "exhibitionOnly",
+              "description": "Determine whether to include exhibition games in the results. Available values: all, exhibitionOnly, nonExhibitionOnly. Default: nonExhibitionOnly.",
+              "disabled": true
+            },
+            {
+              "key": "inDivision",
+              "value": true,
+              "description": "If true, return for games against D-I teams only. If false, return for non D-I opponents. If all, return all games. Available values: all, true, false. Default: true.",
+              "disabled": true
+            },
+            {
+              "key": "location",
+              "value": "",
+              "description": "If set, return only game stats whether the team is in the specified location. Available values: all, neutral, home, away. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Team Game by Qualifier",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/game-by-qualifier",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "game-by-qualifier"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "exhibition",
+              "value": "exhibitionOnly",
+              "description": "Determine whether to include exhibition games in the results. Available values: all, exhibitionOnly, nonExhibitionOnly. Default: nonExhibitionOnly.",
+              "disabled": true
+            },
+            {
+              "key": "inDivision",
+              "value": true,
+              "description": "If true, return for games against D-I teams only. If false, return for non D-I opponents. If all, return all games. Available values: all, true, false. Default: true.",
+              "disabled": true
+            },
+            {
+              "key": "location",
+              "value": "",
+              "description": "If set, return only game stats whether the team is in the specified location. Available values: all, neutral, home, away. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Team Aggregate Box",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/agg-box",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "agg-box"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "splits",
+              "value": "season",
+              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Team Aggregate PBP",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/agg-pbp",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "agg-pbp"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "splits",
+              "value": "season",
+              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Team Aggregate by Qualifier",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/team/agg-by-qualifier",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "team",
+            "agg-by-qualifier"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "splits",
+              "value": "season",
+              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Player Game Box",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/player/game-box",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "player",
+            "game-box"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "playerIds",
+              "value": "",
+              "description": "Unique identifier for the player. See /players for more info on available players.",
+              "disabled": true
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "exhibition",
+              "value": "exhibitionOnly",
+              "description": "Determine whether to include exhibition games in the results. Available values: all, exhibitionOnly, nonExhibitionOnly. Default: nonExhibitionOnly.",
+              "disabled": true
+            },
+            {
+              "key": "inDivision",
+              "value": true,
+              "description": "If true, return for games against D-I teams only. If false, return for non D-I opponents. If all, return all games. Available values: all, true, false. Default: true.",
+              "disabled": true
+            },
+            {
+              "key": "location",
+              "value": "",
+              "description": "If set, return only game stats whether the team is in the specified location. Available values: all, neutral, home, away. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Player Game PBP",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/player/game-pbp",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "player",
+            "game-pbp"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "playerIds",
+              "value": "",
+              "description": "Unique identifier for the player. See /players for more info on available players.",
+              "disabled": true
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "exhibition",
+              "value": "exhibitionOnly",
+              "description": "Determine whether to include exhibition games in the results. Available values: all, exhibitionOnly, nonExhibitionOnly. Default: nonExhibitionOnly.",
+              "disabled": true
+            },
+            {
+              "key": "inDivision",
+              "value": true,
+              "description": "If true, return for games against D-I teams only. If false, return for non D-I opponents. If all, return all games. Available values: all, true, false. Default: true.",
+              "disabled": true
+            },
+            {
+              "key": "location",
+              "value": "",
+              "description": "If set, return only game stats whether the team is in the specified location. Available values: all, neutral, home, away. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Player Aggregate Box",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/player/agg-box",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "player",
+            "agg-box"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "playerIds",
+              "value": "",
+              "description": "Unique identifier for the player. See /players for more info on available players.",
+              "disabled": true
+            },
+            {
+              "key": "splits",
+              "value": "season",
+              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Player Aggregate PBP",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/player/agg-pbp",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "player",
+            "agg-pbp"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "playerIds",
+              "value": "",
+              "description": "Unique identifier for the player. See /players for more info on available players.",
+              "disabled": true
+            },
+            {
+              "key": "splits",
+              "value": "season",
+              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Lineups Game",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/lineups/game",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "lineups",
+            "game"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Lineups Aggregate",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/lineups/agg",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "lineups",
+            "agg"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - On-Off Aggregate",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/on-off/agg",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "on-off",
+            "agg"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "splits",
+              "value": "season",
+              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "disabled": true
+            },
+            {
+              "key": "teamOrOpponent",
+              "value": "team",
+              "description": "If team, return only the team's stats. If opponent, return only the opponents' stats. If all, return both team and opponent stats. Corresponds to the isOffense field in the table. Available values: team, opponent, all. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "onOffDiff",
+              "value": "",
+              "description": "If on, return only stats when the player is on the court. If off, return only stats when the player is off the court. If diff, return the difference. If all, return all three. Available values: all, on, off, diff. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Chances",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/chances",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "chances"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stats - Possessions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/stats/possessions",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "stats",
+            "possessions"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Competitions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/competitions",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "competitions"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Conferences",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/conferences",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "conferences"
+          ],
+          "query": [
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Games",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/games",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "games"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "gameIds",
+              "value": "",
+              "description": "Unique identifier for the game. See /games for more info on available games.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "gameDateFrom",
+              "value": "",
+              "description": "Filter to games on or after this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateTo to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "gameDateTo",
+              "value": "",
+              "description": "Filter to games on or before this date (inclusive). Format: YYYY-MM-DD. Combine with gameDateFrom to specify a date range. Pass the same value for both to filter to a single day.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Tournaments",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/tournaments",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "tournaments"
+          ],
+          "query": [
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "tournamentIds",
+              "value": "",
+              "description": "Unique identifier for the tournament. See /tournaments for more info on available tournaments.",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Teams",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/teams",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "teams"
+          ],
+          "query": [
+            {
+              "key": "gender",
+              "value": "female",
+              "description": "Filter players/teams by gender. Available values: all, male, female. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Competition Teams",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/competition-teams",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "competition-teams"
+          ],
+          "query": [
+            {
+              "key": "gender",
+              "value": "female",
+              "description": "Filter players/teams by gender. Available values: all, male, female. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Players",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/players",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "players"
+          ],
+          "query": [
+            {
+              "key": "gender",
+              "value": "female",
+              "description": "Filter players/teams by gender. Available values: all, male, female. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "playerIds",
+              "value": "",
+              "description": "Unique identifier for the player. See /players for more info on available players.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Entity - Competition Team Players",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{apiServerUrl}}/v3/competition-team-players",
+          "host": [
+            "{{apiServerHost}}"
+          ],
+          "path": [
+            "v3",
+            "competition-team-players"
+          ],
+          "query": [
+            {
+              "key": "gender",
+              "value": "female",
+              "description": "Filter players/teams by gender. Available values: all, male, female. Default: all.",
+              "disabled": true
+            },
+            {
+              "key": "competitionIds",
+              "value": "41098",
+              "description": "Comma separated list of unique identifiers for the competition. Gender + Season create a unique competition, for example 38409 is competitionId for 2024-2025 Men's Basketball. CBB Analytics data only goes to the 2018-2019 season, see /competitions for more info on available competitions.",
+              "disabled": false
+            },
+            {
+              "key": "divisionIds",
+              "value": "1",
+              "description": "Unique identifier for the division, one or more of 1, 2, 3.",
+              "disabled": true
+            },
+            {
+              "key": "conferenceIds",
+              "value": "29",
+              "description": "Unique identifier for the conference. See /conferences for more info on available conferences.",
+              "disabled": true
+            },
+            {
+              "key": "teamIds",
+              "value": "105633",
+              "description": "Unique identifier for the team. See /teams for more info on available teams.",
+              "disabled": false
+            },
+            {
+              "key": "playerIds",
+              "value": "",
+              "description": "Unique identifier for the player. See /players for more info on available players.",
+              "disabled": true
+            },
+            {
+              "key": "updated",
+              "value": "2023-07-01T00:00:00Z",
+              "description": "Only return results updated on or after this time. The data time needs to be in RFC 3339 format and in UTC time zone. (Example: '2019-07-21T17:32:28Z' or '2019-07-21')",
+              "disabled": true
+            },
+            {
+              "key": "limit",
+              "value": "",
+              "description": "Maximum number of records to return. Default: 500, ceiling: 1000.",
+              "disabled": true
+            },
+            {
+              "key": "offset",
+              "value": "",
+              "description": "Ignore the first number of records in the result. Use in conjunction with limit for offset pagination. Ignored if `after` is set.",
+              "disabled": true
+            },
+            {
+              "key": "after",
+              "value": "",
+              "description": "Cursor for cursor pagination — faster than offset on deep pages. Pass the previous response's `meta.nextCursor` (v3) or `X-Next-Cursor` header. Treat as an opaque string. When `after` is set, `offset` is ignored.",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "apiServerUrl",
+      "value": "https://rest.cbbanalytics.com",
+      "type": "string"
+    },
+    {
+      "key": "apiServerHost",
+      "value": "rest.cbbanalytics.com",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
