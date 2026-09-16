@@ -10,6 +10,20 @@ Sample clients for the [CBB Analytics REST API](https://rest.cbbanalytics.com/ap
 
 You need an API key for any of these. Contact CBB Analytics if you don't have one yet.
 
+## Clone the repo
+
+```bash
+git clone https://github.com/NicholasCanova/cbb-api-quickstart.git
+cd cbb-api-quickstart
+```
+
+## Set up the Python environment
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Python
 
 **Run in the browser (no install):**
@@ -18,10 +32,6 @@ You need an API key for any of these. Contact CBB Analytics if you don't have on
 **Run locally:**
 
 ```bash
-git clone https://github.com/NicholasCanova/cbb-api-quickstart.git
-cd cbb-api-quickstart
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
 jupyter notebook scripts/cbb_rest_api_quickstart.ipynb
 ```
 
