@@ -24,6 +24,8 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+On Windows, activate with `.venv\Scripts\activate` instead. Run `deactivate` when you're done.
+
 ## Python
 
 **Run in the browser (no install):**
