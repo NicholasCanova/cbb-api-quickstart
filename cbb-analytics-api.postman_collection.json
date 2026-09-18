@@ -497,7 +497,7 @@
             {
               "key": "splits",
               "value": "season",
-              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "description": "Comma separated list of statistical splits to return, one row per split (e.g. season, l10g, confReg, home, quad1, vsT25). Available splits differ by endpoint; the full list with descriptions is in the API docs for each endpoint. Default: season.",
               "disabled": true
             },
             {
@@ -579,7 +579,7 @@
             {
               "key": "splits",
               "value": "season",
-              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "description": "Comma separated list of statistical splits to return, one row per split (e.g. season, l10g, confReg, home, quad1, vsT25). Available splits differ by endpoint; the full list with descriptions is in the API docs for each endpoint. Default: season.",
               "disabled": true
             },
             {
@@ -661,7 +661,7 @@
             {
               "key": "splits",
               "value": "season",
-              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "description": "Comma separated list of statistical splits to return, one row per split (e.g. season, l10g, confReg, home, quad1, vsT25). Available splits differ by endpoint; the full list with descriptions is in the API docs for each endpoint. Default: season.",
               "disabled": true
             },
             {
@@ -973,7 +973,7 @@
             {
               "key": "splits",
               "value": "season",
-              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "description": "Comma separated list of statistical splits to return, one row per split (e.g. season, l10g, confReg, home, quad1, vsT25). Available splits differ by endpoint; the full list with descriptions is in the API docs for each endpoint. Default: season.",
               "disabled": true
             },
             {
@@ -1055,7 +1055,7 @@
             {
               "key": "splits",
               "value": "season",
-              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "description": "Comma separated list of statistical splits to return, one row per split (e.g. season, l10g, confReg, home, quad1, vsT25). Available splits differ by endpoint; the full list with descriptions is in the API docs for each endpoint. Default: season.",
               "disabled": true
             },
             {
@@ -1283,7 +1283,7 @@
             {
               "key": "splits",
               "value": "season",
-              "description": "The statistical split of aggregated stats to return. Available values: season, l5g, l10g, confReg. Default: season.",
+              "description": "Comma separated list of statistical splits to return, one row per split (e.g. season, l10g, confReg, home, quad1, vsT25). Available splits differ by endpoint; the full list with descriptions is in the API docs for each endpoint. Default: season.",
               "disabled": true
             },
             {
