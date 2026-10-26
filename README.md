@@ -7,6 +7,8 @@ Sample clients for the [CBB Analytics REST API](https://rest.cbbanalytics.com/ap
 | `scripts/cbb_rest_api_quickstart.ipynb` | Python notebook (pandas + requests) |
 | `scripts/cbb_rest_api_quickstart.R` | R script (httr + dplyr) |
 | `cbb-analytics-api.postman_collection.json` | Postman collection, one request per endpoint |
+| `scripts/cbb_sync.py` | Reference sync script: backfill, daily in-season sync, off-season portal tracking, into SQLite |
+| `PIPELINE_GUIDE.md` | How to build a data pipeline: when data updates, backfills, daily syncs, the transfer portal |
 
 You need an API key for any of these. Contact CBB Analytics if you don't have one yet.
 
@@ -52,6 +54,10 @@ Open `scripts/cbb_rest_api_quickstart.R` in RStudio, set `api_key` in `setup()`,
 1. Import `cbb-analytics-api.postman_collection.json` (Postman > Import > Upload Files).
 2. Open the collection's Variables tab and set `apiKey`.
 3. Save, then send any request. Filter params are pre-filled and disabled; enable the ones you want.
+
+## Building a pipeline
+
+Read [PIPELINE_GUIDE.md](PIPELINE_GUIDE.md) before scheduling anything. It covers the yearly calendar, when our data refreshes, bulk exports, backfills, the daily sync, and off-season portal tracking. `scripts/cbb_sync.py` runs each of those modes.
 
 ## API basics
 

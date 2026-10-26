@@ -8,6 +8,7 @@ notes <- function() {
 
   # CBB Analytics REST API — sample R client
   # https://rest.cbbanalytics.com/api-docs/#/
+  # Building a scheduled pipeline (backfill, daily sync, portal tracking)? Read PIPELINE_GUIDE.md and see scripts/cbb_sync.py.
 
   # Major versions (response shape is decided by URL prefix — no envelope query param):
   #   /v3/   recommended — all current fields; { response: { meta, data } } envelope.
