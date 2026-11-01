@@ -39,15 +39,15 @@ On Windows, activate with `.venv\Scripts\activate` instead. Run `deactivate` whe
 jupyter notebook scripts/cbb_rest_api_quickstart.ipynb
 ```
 
-Set `API_KEY` in the Setup cell and run the cells in order. Sections A-D fetch data. Sections E-F are optional benchmarks that pull large result sets.
+Set `API_KEY` in the Setup cell and run the cells in order. Section D pulls real data, and every page counts against your key's request limits.
 
 ## R
 
 ```r
-install.packages(c('httr', 'dplyr', 'purrr', 'tibble', 'readr'))
+install.packages(c('httr', 'dplyr', 'tibble', 'readr'))
 ```
 
-Open `scripts/cbb_rest_api_quickstart.R` in RStudio, set `api_key` in `setup()`, and source the file or run it section by section. `fetch_data(table, params)` is the function you'll use most.
+Open `scripts/cbb_rest_api_quickstart.R` in RStudio, set `api_key` in section A, and run it section by section. `fetch_data(table, params)` is the function you'll use most.
 
 ## Postman
 

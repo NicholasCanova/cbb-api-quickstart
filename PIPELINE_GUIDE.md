@@ -4,7 +4,7 @@
 - How to sync during the off-season for whose in the transfer portal.
 - How to backfill past seasons.
 
-This page goes over each of the three ingestion patterns, and [`scripts/cbb_sync.py`](scripts/cbb_sync.py) is working python code for each. The paragraphs below reference the functions in [`scripts/cbb_sync.py`](scripts/cbb_sync.py) that handle each ingestion pattern. It loads into a local SQLite file; copy its approach into your own stack.
+This page goes over each of the three ingestion patterns, and [`scripts/cbb_sync.py`](scripts/cbb_sync.py) is working python code for each. The paragraphs below reference the functions in [`scripts/cbb_sync.py`](scripts/cbb_sync.py) that handle each ingestion pattern. It writes to a local SQLite file so it runs with no setup. SQLite stands in for your own database: keep the delete-then-insert logic and swap the storage calls.
 
 ```bash
 # install requests library, export your API Key
@@ -62,19 +62,20 @@ The pbp, lineup, possession and chance endpoints are larger. Add them one at a t
 ## Use v3 and cursor pagination
 
 - Call `https://rest.cbbanalytics.com/v3/...` with your key in the `X-API-Key` header. v3 wraps every response as `{ response: { meta, data } }`. v1 and v2 stay up but are legacy and may be deprecated in the future.
-- Page with cursors: send the first request without `after`, then pass `meta.nextCursor` as `after` until `nextCursor` is missing. Cursor pages stay fast at any depth. `offset` slows down as it goes deeper.
-- Treat the cursor as opaque, and don't send `sortBy` (v3 rejects it). `fetch_all()` in the script is the whole loop.
+- Page with cursors: send the first request without `after`, then send each response's `meta.nextCursor` back unchanged as `after`, and stop when it's missing. Cursor pages stay fast at any depth. `offset` slows down as it goes deeper.
+- Don't build or edit cursors yourself, and don't send `sortBy` (v3 rejects it). `iter_all()` in the script is the whole loop.
 
 ## Bulk exports
 
-`GET /v3/exports?endpoint=<stats endpoint>&competitionIds=<ids>` streams every row of one stats endpoint as a single gzipped NDJSON file (one JSON row per line, same fields as the v3 response). Use it for large backfills instead of paging through hundreds of requests.
+`GET /v3/exports?endpoint=<stats endpoint>&competitionIds=<ids>` returns a link to one gzipped NDJSON file with every row of one stats endpoint (one JSON row per line, same fields as the v3 response). Use it for large backfills instead of paging through hundreds of requests.
 
+- The reply is `{ file: { url, rows, bytes, expiresAt }, snapshots: [{ competitionId, snapshotDate }] }`. Download `file.url` within 15 minutes; downloading it again in that window is free.
+- Files are built from our nightly snapshots, so the data is as of each competition's `snapshotDate` (`YYYYMMDD`). A competition with no snapshot returns `404`.
 - One call covers as many competitions as you list, so one export per endpoint can load every season you want.
-- Paid keys includes 10 exports a month, on their own monthly limit; each export call also counts as one regular request. The `X-Exports-Used` and `X-Exports-Limit` response headers show where you stand. A failed or dropped download isn't counted. For more, email nick@cbbanalytics.com.
+- Paid keys include 10 exports a month, on their own monthly limit; each export call also counts as one regular request. The `X-Exports-Used` and `X-Exports-Limit` response headers show where you stand. An export is charged when the link comes back; an error before that costs nothing. For more, email nick@cbbanalytics.com.
 - Stats endpoints only (anything under `stats/`, including `stats/possessions` and `stats/chances`). Page through `games`, `competition-teams` and `competition-team-players`; they're small.
 - Filters the endpoint accepts work here too (`splits`, `teamIds`, `conferenceIds`, `updated`). Paging and sorting params (`limit`, `after`, `offset`, `sortBy`, `sortOrder`) return `400`.
-- One export runs at a time per key. Large tables can take a few minutes.
-- `fetch_export()` in the script downloads and reads one. In pandas: `pd.read_json(path, lines=True, compression='gzip')`. In R: `jsonlite::stream_in(gzfile(path))`.
+- `iter_export()` in the script requests one, downloads it and reads it. In pandas: `pd.read_json(path, lines=True, compression='gzip')`. In R: `jsonlite::stream_in(gzfile(path))`.
 
 Exports are for backfills and reloads. Don't use them for the daily sync.
 

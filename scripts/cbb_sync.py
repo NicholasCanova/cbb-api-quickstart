@@ -19,7 +19,7 @@ import requests
 
 # connection settings; the key and database path come from the environment
 HOST = 'https://rest.cbbanalytics.com/v3'
-API_KEY = os.environ.get('CBB_API_KEY', 'YOUR_API_KEY_HERE')
+API_KEY = os.environ.get('CBB_API_KEY')
 DB_PATH = os.environ.get('CBB_DB_PATH', 'cbb.sqlite')
 
 # page size (the API max), rows per insert batch, and the default daily lookback
@@ -115,7 +115,8 @@ def fetch_all(
     return list(iter_all(endpoint, params))
 
 
-# download one bulk export (gzipped NDJSON, every row of one stats endpoint) and read it line by line; costs one export
+# request one bulk export (every row of one stats endpoint), download the gzipped NDJSON file, and read it line by line
+# costs one export; a 404 (no snapshot for a competition) or any other error before the link comes back costs nothing
 def iter_export(
     endpoint,         # stats endpoint under /v3, e.g. 'stats/player/game-box'
     competition_ids,  # list of competitionIds; one export covers all of them
@@ -123,14 +124,20 @@ def iter_export(
 ):
     # yields row dicts
 
-    # stream the file to disk; a 429 here is the monthly export limit or another export still running on this key
+    # ask for the export; the reply is a download link, and a 429 here means the monthly export limit is used up
     query = {'endpoint': endpoint, 'competitionIds': ','.join(map(str, competition_ids)), **params}
+    res = requests.get(f'{HOST}/exports', headers={'X-API-Key': API_KEY}, params=query, timeout=600)
+    if res.status_code != 200:
+        raise RuntimeError(f'{res.status_code} on export {query}: {res.text}')
+    export = res.json()
+    used, limit = res.headers.get('X-Exports-Used'), res.headers.get('X-Exports-Limit')
+    as_of = min(s['snapshotDate'] for s in export['snapshots'])
+
+    # stream the file to disk; the link works for 15 minutes, and downloading it again in that time is free
     with tempfile.TemporaryFile() as f:
-        with requests.get(f'{HOST}/exports', headers={'X-API-Key': API_KEY}, params=query, stream=True, timeout=600) as res:
-            if res.status_code != 200:
-                raise RuntimeError(f'{res.status_code} on export {query}: {res.text}')
-            used, limit = res.headers.get('X-Exports-Used'), res.headers.get('X-Exports-Limit')
-            for chunk in res.iter_content(chunk_size=1 << 20):
+        with requests.get(export['file']['url'], stream=True, timeout=600) as download:
+            download.raise_for_status()
+            for chunk in download.iter_content(chunk_size=1 << 20):
                 f.write(chunk)
         f.seek(0)
 
@@ -142,8 +149,8 @@ def iter_export(
                     rows += 1
                     yield json.loads(line)
 
-    # log the export count
-    print(f'  export {endpoint} {competition_ids}: {rows} rows, exports used {used} of {limit}')
+    # log the row count, the oldest snapshot date, and the export count
+    print(f'  export {endpoint} {competition_ids}: {rows} rows as of {as_of}, exports used {used} of {limit}')
 
 
 # make sure the endpoint's table exists
@@ -307,6 +314,10 @@ def main():
     parser.add_argument('--export', action='store_true', help='backfill mode: pull stats endpoints with bulk exports')
     args = parser.parse_args()
     since = args.since or (date.today() - timedelta(days=LOOKBACK_DAYS)).isoformat()
+
+    # stop before any request when the key isn't set
+    if not API_KEY:
+        sys.exit('Set CBB_API_KEY to your API key, e.g. export CBB_API_KEY=your-key')
 
     # default to the competitions flagged current; an empty list would drop the competition filter, so stop instead
     competitions = fetch_all('competitions', {})
