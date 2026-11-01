@@ -1,7 +1,7 @@
 # Building data ingestion pipelines on the CBB Analytics REST API
 
 - How to keep the current season in sync with daily ingests.
-- How to sync during the off-season for whose in the transfer portal.
+- How to sync during the off-season for who's in the transfer portal.
 - How to backfill past seasons.
 
 This page goes over each of the three ingestion patterns, and [`scripts/cbb_sync.py`](scripts/cbb_sync.py) is working python code for each. The paragraphs below reference the functions in [`scripts/cbb_sync.py`](scripts/cbb_sync.py) that handle each ingestion pattern. It writes to a local SQLite file so it runs with no setup. SQLite stands in for your own database: keep the delete-then-insert logic and swap the storage calls.
@@ -28,7 +28,7 @@ python scripts/cbb_sync.py offseason
 | Initial setup | **Backfill** the seasons you want. |
 | Early October - early April | **Daily sync**, each morning. The new season becomes `isCurrent` in early October, when new rosters are available and exhibitions start. |
 | After the season ends | **Reload the season that just ended** once, then stop the daily sync. Stats do not change in the off-season. |
-| April - early October | **Off-season portal tracking**, every afternoon. No stats fetching. |
+| April - early October | **Off-season portal tracking**, after each of our portal refreshes. No stats fetching. |
 | Once a year, before the season | **Reload past seasons** you keep, from bulk exports. That picks up fixes on our side that don't move `updated`. |
 
 ## When our data updates
@@ -36,7 +36,8 @@ python scripts/cbb_sync.py offseason
 | Period | Our refresh | Schedule your job |
 |---|---|---|
 | Season | Once a day, starting 4:00am ET. Finished by about 5:30am ET. | 6:00am ET or later |
-| Off-season | Portal data 3x a day at 5:00am, 11:00am, 5:00pm ET. Season stats don't change. | 30 minutes after each of our runs |
+| Off-season, busiest portal weeks | Portal data 4x a day at 5:00am, 11:00am, 5:00pm and 11:00pm ET. Season stats don't change. | 30 minutes after each of our runs |
+| Off-season, later | Portal data once a day at 11:00am ET, once portal activity slows. | 11:30am ET or later |
 
 Times are fixed in Eastern time year-round.
 
@@ -114,8 +115,8 @@ Some fields on team game rows describe the season as of today, not the game, and
 
 `offseason()` in the script. Once the season-end reload is done, stop fetching stats. Portal activity changes daily from late March into the summer, and `competition-team-players` is the source of truth for it.
 
-1. Once a day after 1:00pm ET, re-pull `competition-team-players?competitionIds=<season that just ended>&divisionIds=1` in full. It's about 6 requests per gender.
-2. Compare `inPortalAfterSeason` and `portalStatus` against yesterday's copy. Portal changes don't move `updated`, so a diff is the only way to catch them.
+1. After each of our portal refreshes (see When our data updates), re-pull `competition-team-players?competitionIds=<season that just ended>&divisionIds=1` in full. It's about 6 requests per gender.
+2. Compare `inPortalAfterSeason` and `portalStatus` against your last copy. Portal changes don't move `updated`, so a diff is the only way to catch them.
 3. Also pull `competition-team-players?competitionIds=<next season>&divisionIds=1`, where the next season's id is `nextCompetitionId` on `/v3/competitions`. That id appears before rosters do; the pull comes back empty until next season's rosters load, usually early October. Then `isTransfer` and `priorTeamId` mark the arrivals.
 
 `willTransfer`, `nextTeamMarket` and `nextConferenceId` on the season that just ended come from next season's rosters, not the portal. They stay empty or false until those rosters load in October.
