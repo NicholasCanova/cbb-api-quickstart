@@ -62,7 +62,7 @@ The pbp, lineup, possession and chance endpoints are larger. Add them one at a t
 
 ## Use v3 and cursor pagination
 
-- Call `https://rest.cbbanalytics.com/v3/...` with your key in the `X-API-Key` header. v3 wraps every response as `{ response: { meta, data } }`. v1 and v2 stay up but are legacy and may be deprecated in the future.
+- Call `https://rest.cbbanalytics.com/v3/...` with your key in the `X-API-Key` header. v3 wraps every successful response as `{ response: { meta, data } }`; errors return a status code with a plain-text message, so check the status before parsing. v1 and v2 stay up but are legacy and may be deprecated in the future.
 - Page with cursors: send the first request without `after`, then send each response's `meta.nextCursor` back unchanged as `after`, and stop when it's missing. Cursor pages stay fast at any depth. `offset` slows down as it goes deeper.
 - Don't build or edit cursors yourself, and don't send `sortBy` (v3 rejects it). `iter_all()` in the script is the whole loop.
 

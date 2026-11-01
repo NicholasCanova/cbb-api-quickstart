@@ -9,6 +9,7 @@ Sample clients for the [CBB Analytics REST API](https://rest.cbbanalytics.com/ap
 | `cbb-analytics-api.postman_collection.json` | Postman collection, one request per endpoint |
 | `scripts/cbb_sync.py` | Reference sync script: backfill, daily in-season sync, off-season portal tracking, into SQLite |
 | `PIPELINE_GUIDE.md` | How to build a data pipeline: when data updates, backfills, daily syncs, the transfer portal |
+| `V3_MIGRATION_GUIDE.md` | Moving from /v1/ or /v2/ to /v3/: the response envelope, cursor pagination, game date filters |
 
 You need an API key for any of these. Contact CBB Analytics if you don't have one yet.
 
