@@ -44,7 +44,7 @@ Times are fixed in Eastern time year-round.
 ## Requests and limits
 
 - Each page is one request against your key's monthly and yearly limits. Use `limit=1000` (the max) so a 20,000-row pull only costs 20 requests.
-- The rate limit is 180 requests per minute. A `429` means slow down and retry. A 1 second sleep timer between API calls is advised. A `429` whose body says `Monthly API limit exceeded` or `Yearly API limit exceeded` means you're out of quota until the limit resets, so retrying won't help. If this happens, email your primary contact at CBB Analytics.
+- The rate limit is 180 requests per minute. A `429` means slow down and retry. A 1 second sleep timer between API calls is advised; `api_get()` in the script does this. A `429` whose body says `Monthly API limit exceeded` or `Yearly API limit exceeded` means you're out of quota until the limit resets, so retrying won't help. If this happens, email your primary contact at CBB Analytics.
 - Stats endpoints currently return Division I only. Pass `divisionIds=1` on `games`, `competition-teams` and `competition-team-players` to match.
 - On aggregate endpoints, always pass `splits`. Without it you get every split (home, away, conference, last 5, and many more), which can be many times the rows you wanted.
 

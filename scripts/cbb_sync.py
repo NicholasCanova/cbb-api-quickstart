@@ -23,8 +23,9 @@ EXPORTS_HOST = 'https://exports.cbbanalytics.com/v3'
 API_KEY = os.environ.get('CBB_API_KEY')
 DB_PATH = os.environ.get('CBB_DB_PATH', 'cbb.sqlite')
 
-# page size (the API max), rows per insert batch, and the default daily lookback
+# page size (the API max), seconds to wait before each request, rows per insert batch, and the default daily lookback
 PAGE_SIZE = 1000
+REQUEST_PAUSE = 1
 INSERT_BATCH = 5000
 LOOKBACK_DAYS = 3
 
@@ -64,6 +65,9 @@ def api_get(
 
     # send lists comma-separated, which every id filter accepts
     query = {k: ','.join(map(str, v)) if isinstance(v, (list, tuple, set)) else v for k, v in params.items()}
+
+    # pause before every request so paging stays well under the 180-per-minute rate limit
+    time.sleep(REQUEST_PAUSE)
 
     # retry with backoff; quota errors and other 4xx fail right away
     for attempt in range(5):
