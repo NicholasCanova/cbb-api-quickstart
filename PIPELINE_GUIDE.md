@@ -67,8 +67,9 @@ The pbp, lineup, possession and chance endpoints are larger. Add them one at a t
 
 ## Bulk exports
 
-`GET /v3/exports?endpoint=<stats endpoint>&competitionIds=<ids>` returns a link to one gzipped NDJSON file with every row of one stats endpoint (one JSON row per line, same fields as the v3 response). Use it for large backfills instead of paging through hundreds of requests.
+`GET https://exports.cbbanalytics.com/v3/exports?endpoint=<stats endpoint>&competitionIds=<ids>` returns a link to one gzipped NDJSON file with every row of one stats endpoint (one JSON row per line, same fields as the v3 response). Use it for large backfills instead of paging through hundreds of requests.
 
+- Exports have their own host, `exports.cbbanalytics.com`, with the same `X-API-Key` header. The old `rest.cbbanalytics.com/v3/exports` address answers with a `308` redirect; most HTTP clients follow it, but plain `curl` needs `-L`.
 - The reply is `{ file: { url, rows, bytes, expiresAt }, snapshots: [{ competitionId, snapshotDate }] }`. Download `file.url` within 15 minutes; downloading it again in that window is free.
 - Files are built from our nightly snapshots, so the data is as of each competition's `snapshotDate` (`YYYYMMDD`). A competition with no snapshot returns `404`.
 - One call covers as many competitions as you list, so one export per endpoint can load every season you want.

@@ -19,6 +19,7 @@ import requests
 
 # connection settings; the key and database path come from the environment
 HOST = 'https://rest.cbbanalytics.com/v3'
+EXPORTS_HOST = 'https://exports.cbbanalytics.com/v3'
 API_KEY = os.environ.get('CBB_API_KEY')
 DB_PATH = os.environ.get('CBB_DB_PATH', 'cbb.sqlite')
 
@@ -126,7 +127,7 @@ def iter_export(
 
     # ask for the export; the reply is a download link, and a 429 here means the monthly export limit is used up
     query = {'endpoint': endpoint, 'competitionIds': ','.join(map(str, competition_ids)), **params}
-    res = requests.get(f'{HOST}/exports', headers={'X-API-Key': API_KEY}, params=query, timeout=600)
+    res = requests.get(f'{EXPORTS_HOST}/exports', headers={'X-API-Key': API_KEY}, params=query, timeout=600)
     if res.status_code != 200:
         raise RuntimeError(f'{res.status_code} on export {query}: {res.text}')
     export = res.json()
